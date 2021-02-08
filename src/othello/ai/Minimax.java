@@ -1,4 +1,4 @@
-package othello.player.ai;
+package othello.ai;
 
 import java.awt.Point;
 

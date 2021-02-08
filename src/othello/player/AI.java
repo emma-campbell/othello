@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import othello.game.Board;
 import othello.game.Color;
-import othello.player.ai.Minimax;
+import othello.ai.Minimax;
 
 public class AI extends Player {
 

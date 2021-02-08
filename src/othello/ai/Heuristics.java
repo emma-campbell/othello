@@ -1,4 +1,4 @@
-package othello.player.ai;
+package othello.ai;
 
 import othello.game.Board;
 import othello.game.Color;

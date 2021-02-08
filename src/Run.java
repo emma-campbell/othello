@@ -14,6 +14,7 @@ public class Run {
     public static void main(String[] args) {
 
         // This is a comment
+        Utils.clear();
         
         // TODO: Introduction
         
@@ -92,9 +93,13 @@ public class Run {
     public static void presentWinner(Player winner, int winCount, int losCount) {
 
         String c = ((winner.color == Color.DARK) ? "DARK" : "LIGHT");
+        String otherC = ((c == "DARK") ? "LIGHT" : "DARK");
 
         Utils.clear();
-        System.out.println("\n" + c + " IS THE WINNER");
+        
+        System.out.println(c + " IS THE WINNER\n");
+        System.out.println(c + ": " + winCount);
+        System.out.println(otherC + ": " + losCount);
 
     }
 }
