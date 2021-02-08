@@ -13,9 +13,8 @@ public class Run {
     
     public static void main(String[] args) {
 
-        // Engine engine = new Engine(8, player1, player2);
-        // Player winner = engine.play();
-
+        // This is a comment
+        
         // TODO: Introduction
         
         // TODO: Choose game size
