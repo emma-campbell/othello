@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Run",
+            "request": "launch",
+            "mainClass": "Run",
+            "projectName": "searching_758d41a2"
+        },
+        {
+            "type": "java",
             "name": "Attach",
             "request": "attach",
             "hostName": "localhost",

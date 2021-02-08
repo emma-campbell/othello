@@ -9,12 +9,15 @@ import othello.tui.Utils;
 
 public class Engine {
     
-    Board board;
+    private Board board;
     
-    Player p1;
-    Player p2;
+    private Player p1;
+    private Player p2;
 
-    Color turn;
+    private Color turn;
+
+    public int p1Score;
+    public int p2Score;
 
     public Engine(int dim, Player p1, Player p2) {
         
@@ -42,6 +45,10 @@ public class Engine {
         } else {
             return p2;
         }
+    }
+
+    public int getScore(Color c) {
+        return board.getPlayerPeices(c);
     }
 
     public Player play() {
