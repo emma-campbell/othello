@@ -13,10 +13,10 @@ public class Run {
     
     public static void main(String[] args) {
 
-        // This is a comment
         Utils.clear();
         
         // TODO: Introduction
+        System.out.println("Welcome to Othello!");
         
         // TODO: Choose game size
         int size = chooseGameSize();
@@ -48,6 +48,8 @@ public class Run {
             presentWinner(winner, winScore, losScore);
         }        
     }
+
+    
 
     public static int chooseGameSize() {
         while (true) {
