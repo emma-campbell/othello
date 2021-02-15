@@ -3,19 +3,21 @@ package othello.game;
 import java.util.ArrayList;
 import java.awt.Point;
 
+import othello.ai.search.State;
 import othello.game.exceptions.IllegalBoardDimensions;
 
-public class Board {
-
+public class Board implements State<Color> {
+    
     private Color arr[][];
     public int dim;
+    public Color turn;
 
     /**
      * Construct a new Board with the given dimensions
      * 
      * @param dim   the square dimension of the board
      */
-    public Board(int dim) throws IllegalBoardDimensions {
+    public Board(int dim, Color turn) throws IllegalBoardDimensions {
 
         if (!(dim == 4 || dim == 6 || dim == 8)) {
             throw new IllegalBoardDimensions();            
@@ -46,6 +48,8 @@ public class Board {
             this.arr[4][3] = Color.DARK;
             this.arr[4][4] = Color.LIGHT;
         }
+
+        this.turn = turn;
     }
 
     /**
@@ -70,6 +74,17 @@ public class Board {
     public void set(int i, int j, Color c)
     {
         this.arr[i][j] = c;
+    }
+
+    /**
+     * Sets the turn to the next player
+     */
+    public void setTurn() {
+        if (this.turn == Color.DARK) {
+            this.turn = Color.LIGHT;
+        } else {
+            this.turn = Color.DARK;
+        }
     }
 
     /**
@@ -106,21 +121,6 @@ public class Board {
     }
 
     /**
-     * Gets the total number of peices on the board currently
-     * 
-     * @return      number of peices on the board
-     */
-    // private int getTotalPeices() {
-    //     int c = 0;
-    //     for (int i = 0; i < this.dim; i++) {
-    //         for (int j = 0; j < this.dim; j++) {
-    //             if (this.arr[i][j] != Color.NONE) c++;
-    //         }
-    //     }
-    //     return c;
-    // }
-
-    /**
      * Gets the total number of pieces for the given player
      * 
      * @param player     Color of the player
@@ -137,6 +137,12 @@ public class Board {
         return score;
     }
 
+    /**
+     * Return whether or not the given player has any moves remaining
+     * 
+     * @param player
+     * @return
+     */
     public boolean hasAnyMoves(Color player) {
         return !getAllPossibleMoves(player).isEmpty();
     }
@@ -177,6 +183,7 @@ public class Board {
             set(pt.x, pt.y, player);
         }
 
+        setTurn();
     }
     
     /**
@@ -190,26 +197,29 @@ public class Board {
     public Board getNextBoard(Point move, Color player) {
         
         Board nextBoard;
-
+        Color otherPlayer = (player == Color.DARK ? Color.LIGHT : Color.DARK);
+        
         try {
-            
-            nextBoard = new Board(this.dim);
-            
-            for (int i = 0; i < this.dim; i++) {
-                for (int j = 0; j < this.dim; j++) {
-                    nextBoard.set(i, j, this.get(i, j));
+            if (validMove(player, move.x, move.y)) {
+                nextBoard = new Board(this.dim, otherPlayer);
+                
+                for (int i = 0; i < this.dim; i++) {
+                    for (int j = 0; j < this.dim; j++) {
+                        nextBoard.set(i, j, this.get(i, j));
+                    }
                 }
+                
+                nextBoard.set(move.x, move.y, player);
+        
+                ArrayList<Point> reverse = reversedPoints(player, move.x, move.y);
+                for (Point pt : reverse) {
+                    nextBoard.set(pt.x, pt.y, player);
+                }
+        
+                return nextBoard;
+            } else {
+                return this;
             }
-    
-            nextBoard.set(move.x, move.y, player);
-    
-            ArrayList<Point> reverse = reversedPoints(player, move.x, move.y);
-            for (Point pt : reverse) {
-                nextBoard.set(pt.x, pt.y, player);
-            }
-    
-            return nextBoard;
-
         } catch (IllegalBoardDimensions e) {
             System.out.println("ERROR: " + e.toString());
         }
@@ -229,8 +239,11 @@ public class Board {
 
         if (get(i, j) != Color.NONE) return false;
 
-        int mi, mj, count;
+        int mi;
+        int mj;
+        int count;
         int limit = this.dim - 1;
+
         Color otherPlayer = ((player == Color.DARK) ? Color.LIGHT : Color.DARK);
 
         // Begin by moving up to check whether the opponent has a line of theirs moving up
@@ -494,4 +507,15 @@ public class Board {
 
         return res.toString();
     }
+
+    @Override
+    public boolean isTerminal() {
+        return isGameFinished();
+    }
+
+    @Override
+    public Color whoseTurn() {
+        return this.turn;
+    }
+
 }

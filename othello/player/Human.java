@@ -2,11 +2,12 @@ package othello.player;
 
 import java.awt.Point;
 
+import othello.ai.search.Problem;
 import othello.game.Board;
 import othello.game.Color;
 
 public class Human extends Player {
-    
+
     public Human(Color c) {
         super(c);
     }
@@ -21,8 +22,9 @@ public class Human extends Player {
         return "USER";
     }
 
-    @Override 
-    public Point play(Board b) {
+    @Override
+    public Point play(Problem<Board, Point, Color> problem) {
         return null;
     }
+
 }

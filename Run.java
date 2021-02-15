@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 import othello.game.Color;
-import othello.game.Engine;
+import othello.game.Othello;
 import othello.player.AI;
 import othello.player.Human;
 import othello.player.Player;
@@ -15,29 +15,17 @@ public class Run {
 
         Utils.clear();
         
-        // TODO: Introduction
         System.out.println("Welcome to Othello!");
-        
-        // TODO: Choose game size
         int size = chooseGameSize();
-
-        // TODO: Choose opponent
-        int opp = chooseOpponent();
 
         Human p1 = new Human(Color.DARK);
         Player p2 = null;
-
-        if (opp == 1) {
-            System.out.println("UNHANDLED");
-        } else if (opp == 2) {
-            p2 = new AI(Color.LIGHT, 6, false);    
-        } else {
-            p2 = new AI(Color.LIGHT, 6, true);
-        }
         
+        p2 = new AI(Color.LIGHT, 2);
+
         if (p2 != null) {
             
-            Engine engine = new Engine(size, p1, p2);
+            Othello engine = new Othello(size, p1, p2);
             
             Player winner = engine.play();
             Color loser = ((winner.color == Color.DARK) ? Color.LIGHT : Color.DARK);
@@ -77,7 +65,9 @@ public class Run {
             System.out.println("\t1. Random Player");
             System.out.println("\t2. MINIMAX");
             System.out.println("\t3. MINIMAX with alpha-beta pruning");
-            System.out.print("YOUR CHOICE [1, 2, 3]: ");
+            System.out.println("\t4. H-MINIMAX with alpha-beta pruning");
+
+            System.out.print("YOUR CHOICE [1, 2, 3, 4]: ");
 
             if (input.hasNextInt()) {
 
@@ -94,14 +84,18 @@ public class Run {
 
     public static void presentWinner(Player winner, int winCount, int losCount) {
 
-        String c = ((winner.color == Color.DARK) ? "DARK" : "LIGHT");
-        String otherC = ((c == "DARK") ? "LIGHT" : "DARK");
-
-        Utils.clear();
-        
-        System.out.println(c + " IS THE WINNER\n");
-        System.out.println(c + ": " + winCount);
-        System.out.println(otherC + ": " + losCount);
+        if (winner != null) {
+            String c = ((winner.color == Color.DARK) ? "DARK" : "LIGHT");
+            String otherC = ((c.equals("DARK")) ? "LIGHT" : "DARK");
+    
+            Utils.clear();
+            
+            System.out.println(c + " IS THE WINNER\n");
+            System.out.println(c + ": " + winCount);
+            System.out.println(otherC + ": " + losCount);
+        } else {
+            System.out.println("It's a tie!");
+        }
 
     }
 }
