@@ -1,5 +1,7 @@
 # Othello
-<img align="center" width="40%" src="https://github.com/emma-campbell/searching/blob/master/img/demo.svg">
+<p align="center">
+    <img width="40%" src="https://github.com/emma-campbell/searching/blob/master/img/demo.svg">
+</p>
 
 # Authors
 |Name|Email|
