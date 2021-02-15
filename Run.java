@@ -4,6 +4,7 @@ import othello.game.Color;
 import othello.game.Othello;
 import othello.player.AI;
 import othello.player.Human;
+import othello.player.Computer;
 import othello.player.Player;
 import othello.tui.Utils;
 
@@ -17,11 +18,20 @@ public class Run {
         
         System.out.println("Welcome to Othello!");
         int size = chooseGameSize();
+        int opp = chooseOpponent();
 
         Human p1 = new Human(Color.DARK);
         Player p2 = null;
         
-        p2 = new AI(Color.LIGHT, 2);
+        if (opp == 1) {
+            p2 = new Computer(Color.LIGHT);
+        } else if (opp == 2) {
+            p2 = new AI(Color.LIGHT, 2);
+        } else if (opp == 3) {
+            System.out.println("UNHANDLED");
+        } else {
+            System.out.println("UNHANDLED");
+        }
 
         if (p2 != null) {
             

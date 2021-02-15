@@ -3,7 +3,6 @@ package othello.player;
 import java.awt.Point;
 
 import othello.ai.algorithms.Minimax;
-import othello.ai.algorithms.SearchAlgorithm;
 import othello.ai.search.Problem;
 import othello.game.Board;
 import othello.game.Color;
