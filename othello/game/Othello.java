@@ -10,8 +10,8 @@ import othello.tui.Utils;
 import othello.ai.search.Problem;
 
 /**
- * @author  Emma Campbell & Emma Schechter
- * @since   02-14-2021   
+ * @author Emma Campbell & Emma Schechter
+ * @since 02-14-2021
  */
 public class Othello implements Problem<Board, Point, Color> {
 
@@ -26,9 +26,9 @@ public class Othello implements Problem<Board, Point, Color> {
     /**
      * Constructor for the Othello game engine
      * 
-     * @param dim   square dimension of the board
-     * @param p1    first player
-     * @param p2    second player
+     * @param dim square dimension of the board
+     * @param p1  first player
+     * @param p2  second player
      */
     public Othello(int dim, Player p1, Player p2) {
 
@@ -45,7 +45,7 @@ public class Othello implements Problem<Board, Point, Color> {
     /**
      * Determine the winner of the game
      * 
-     * @return      the player who won the game
+     * @return the player who won the game
      */
     private Player decideWinner() {
 
@@ -64,21 +64,19 @@ public class Othello implements Problem<Board, Point, Color> {
     /**
      * Get the score of the given player color
      * 
-     * @param c     color of the player to get the score of
-     * @return      score of the player with the given color
+     * @param c color of the player to get the score of
+     * @return score of the player with the given color
      */
     public int getScore(Color c) {
         return board.getPlayerPeices(c);
     }
 
     /**
-     * This code actually drives the game play. It switches the turns, 
-     * gets the users move, and calls the methods that generate the AI's
-     * move. When game play is finished, it calls {@code decideWinner()} to
-     * determine who won the game
+     * This code actually drives the game play. It switches the turns, gets the
+     * users move, and calls the methods that generate the AI's move. When game play
+     * is finished, it calls {@code decideWinner()} to determine who won the game
      * 
-     * TODO:
-     * - Decrease code complexity by moving redundant code to its own function
+     * TODO: - Decrease code complexity by moving redundant code to its own function
      * 
      * @return      {@code Player} who won
      */
@@ -91,9 +89,9 @@ public class Othello implements Problem<Board, Point, Color> {
 
         do {
 
-            // Calling this to clear the screen and create more 
+            // Calling this to clear the screen and create more
             // intriguing game play.
-            Utils.clear(); 
+            Utils.clear();
 
             System.out.println("X = DARK, O = LIGHT\n");
             printBoard();
@@ -124,13 +122,13 @@ public class Othello implements Problem<Board, Point, Color> {
                             // Add our new point for the p1
                             board.refreshBoard(move, p1.color);
 
-                        } else {    // Otherwise, they are AI! (or Random)
+                        } else { // Otherwise, they are AI! (or Random)
                             Point move;
                             move = p1.play(this);
                             board.refreshBoard(move, p1.color);
                         }
                     } else {
-                        
+
                         // In this instance, there are no actual moves that p1
                         // can play, so we inform the user and then set the turn
                         // to the other player.
@@ -170,12 +168,12 @@ public class Othello implements Problem<Board, Point, Color> {
                             // Add our new point for the p1
                             board.refreshBoard(move, p2.color);
 
-                        } else {    // The player is AI! (or Random)
+                        } else { // The player is AI! (or Random)
                             Point move = p2.play(this);
                             board.refreshBoard(move, p2.color);
                         }
                     } else {
-                        
+
                         // In this instance, there are no actual moves that p1
                         // can play, so we inform the user and then set the turn
                         // to the other player.
@@ -235,8 +233,8 @@ public class Othello implements Problem<Board, Point, Color> {
     }
 
     /**
-     * Returns all the possible actions that can be made by the player
-     * whose turn it is
+     * Returns all the possible actions that can be made by the player whose turn it
+     * is
      * 
      * @param s     {@code Board} currently in play
      * @return      {@code ArrayList<Point>} of all possible moves
@@ -247,12 +245,12 @@ public class Othello implements Problem<Board, Point, Color> {
     }
 
     /**
-     * Generates the "result"-ing Board when {@code Point} move is applied to 
-     * the current {@code Board} s.
+     * Generates the "result"-ing Board when {@code Point} move is applied to the
+     * current {@code Board} s.
      * 
      * @param s     current {@code Board}
      * @param move  move to be applied
-     * @return      resulting board 
+     * @return      resulting board
      */
     @Override
     public Board result(Board s, Point move) {
@@ -271,8 +269,7 @@ public class Othello implements Problem<Board, Point, Color> {
     }
 
     /**
-     * Utility function that determines whether the given player p 
-     * won or not
+     * Utility function that determines whether the given player p won or not
      * 
      * @param s     current board
      * @param p     current player
@@ -281,7 +278,7 @@ public class Othello implements Problem<Board, Point, Color> {
     @Override
     public int utility(Board s, Color p) {
         Color otherPlayer = (p == Color.DARK ? Color.LIGHT : Color.DARK);
-        
+
         p1Score = s.getPlayerPeices(p);
         p2Score = s.getPlayerPeices(otherPlayer);
 
@@ -313,5 +310,73 @@ public class Othello implements Problem<Board, Point, Color> {
     @Override
     public Color whoseTurn(Board s) {
         return s.whoseTurn();
+    }
+
+    @Override
+    public int heuristic(Board s) {
+        Color player = s.whoseTurn();
+        int mobility = mobility(s, player);
+        int discDiff = discDifference(s, player);
+        return 2*mobility + discDiff + 1000*corners(s, player);
+    }
+
+    /**
+     * Evaluates the difference in the number of disks between AI and the other player
+     * 
+     * @param b         {@code Board} with current state
+     * @param player    {@code Color} representing the current player
+     * @return          integer difference between the numbers of discs
+     */
+    private int discDifference(Board b, Color player) {
+        Color otherPlayer = ((player == Color.DARK) ? Color.LIGHT : Color.DARK);
+
+        int discCount = b.getPlayerPeices(player);
+        int otherDiscCount = b.getPlayerPeices(otherPlayer);
+
+        return 100 * (discCount - otherDiscCount) / (discCount + otherDiscCount + 1);
+    }
+
+    /**
+     * Evaluates the mobility (ability to move) of the given player
+     * 
+     * @param b         {@code Board} with current state
+     * @param player    {@code Color} representing the current player
+     * @return          integer difference in mobility between the two players
+     */
+    private int mobility(Board b, Color player) {
+        Color otherPlayer = ((player == Color.DARK) ? Color.LIGHT : Color.DARK);
+        
+        int moveCount = b.getAllPossibleMoves(player).size();
+        int otherMoveCount = b.getAllPossibleMoves(otherPlayer).size();
+        
+        return 100 * (moveCount - otherMoveCount) / (moveCount + otherMoveCount + 1);  
+    }
+
+    /**
+     * Evaluates the number of corners captured by the given player. Corners are important
+     * because once captured, the opponent cannot flip them.
+     * 
+     * @param b         {@code Board} of current state
+     * @param player    {@code Color} representing the current player
+     * @return          integer difference between the corners of the two players
+     */
+    private static int corners(Board b, Color player) {
+        
+        Color otherPlayer = ((player == Color.DARK) ? Color.LIGHT : Color.DARK);
+
+        int corners = 0;
+        int otherCorners = 0;
+
+        if (b.get(0, 0) == player) corners++;
+        if (b.get(b.dim-1, 0) == player) corners++;
+        if (b.get(0, b.dim-1) == player) corners++;
+        if (b.get(b.dim-1, b.dim-1) == player) corners++;
+
+        if (b.get(0, 0) == otherPlayer) otherCorners++;
+        if (b.get(b.dim-1, 0) == otherPlayer) otherCorners++;
+        if (b.get(0, b.dim-1) == otherPlayer) otherCorners++;
+        if (b.get(b.dim-1, b.dim-1) == otherPlayer) otherCorners++;
+
+        return 100 * (corners - otherCorners) / (corners + otherCorners + 1);
     }
 }

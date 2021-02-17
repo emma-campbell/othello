@@ -18,19 +18,25 @@ public class Run {
         
         System.out.println("Welcome to Othello!");
         int size = chooseGameSize();
-        int opp = chooseOpponent();
+        Utils.clear();
 
+        int opp = chooseOpponent();
+        Utils.clear();
+        
         Human p1 = new Human(Color.DARK);
         Player p2 = null;
         
         if (opp == 1) {
             p2 = new Computer(Color.LIGHT);
-        } else if (opp == 2) {
-            p2 = new AI(Color.LIGHT, 2);
         } else if (opp == 3) {
             System.out.println("UNHANDLED");
         } else {
-            System.out.println("UNHANDLED");
+            if (opp != 2) {
+                int limit = chooseDepthLimit();
+                p2 = new AI(Color.LIGHT, opp, limit);
+            } else {
+                p2 = new AI(Color.LIGHT, opp, 0);
+            }
         }
 
         if (p2 != null) {
@@ -46,8 +52,6 @@ public class Run {
             presentWinner(winner, winScore, losScore);
         }        
     }
-
-    
 
     public static int chooseGameSize() {
         while (true) {
@@ -74,7 +78,7 @@ public class Run {
             System.out.println("\nPLEASE CHOOSE AN OPPONENT FROM THE FOLLOWING OPTIONS...");
             System.out.println("\t1. Random Player");
             System.out.println("\t2. MINIMAX");
-            System.out.println("\t3. MINIMAX with alpha-beta pruning");
+            System.out.println("\t3. H-MINIMAX");
             System.out.println("\t4. H-MINIMAX with alpha-beta pruning");
 
             System.out.print("YOUR CHOICE [1, 2, 3, 4]: ");
@@ -82,10 +86,24 @@ public class Run {
             if (input.hasNextInt()) {
 
                 int choice = input.nextInt();
-
-                if (choice == 1 || choice == 2 || choice == 3) {
+                
+                if (choice == 1 || choice == 2 || choice == 3 || choice == 4) {
                     return choice;
                 }
+            }
+
+            Utils.clear();
+        }
+    }
+
+    public static int chooseDepthLimit() {
+        while (true) {
+            System.out.println("Please select a limit to the depth-first search.");
+            System.out.println("Keep in mind, that the larger the number, the longer the search will take.");
+            System.out.print("Depth Limit: ");
+
+            if (input.hasNextInt()) {
+                return input.nextInt();
             }
 
             Utils.clear();
