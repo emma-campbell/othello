@@ -59,3 +59,4 @@ java Run
 - [X] H-MINIMAX w/ alpha-beta pruning
 - [ ] Code Commenting
 - [ ] Code Refactor -- Othello.java
+- [ ] Timer Functionality -- AI. 
