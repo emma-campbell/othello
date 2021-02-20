@@ -55,7 +55,7 @@ java Run
 
 # Todos
 - [x] Random  
-- [ ] H-MINIMAX
+- [X] H-MINIMAX
 - [X] H-MINIMAX w/ alpha-beta pruning
 - [ ] Code Commenting
 - [ ] Code Refactor -- Othello.java

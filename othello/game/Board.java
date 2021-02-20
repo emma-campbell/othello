@@ -6,6 +6,10 @@ import java.awt.Point;
 import othello.ai.search.State;
 import othello.game.exceptions.IllegalBoardDimensions;
 
+/**
+ * @author  Emma Campbell & Emma Schechter
+ * @since   02-09-2021
+ */
 public class Board implements State<Color> {
     
     private Color arr[][];

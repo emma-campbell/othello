@@ -2,6 +2,10 @@ package othello.ai.search;
 
 import java.util.ArrayList;
 
+/**
+ * @author  Emma Campbell & Emma Schechter
+ * @since   02-14-2021
+ */
 public interface Problem<State, Action, Player> {
 
     /**

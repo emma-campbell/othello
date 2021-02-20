@@ -8,6 +8,10 @@ import othello.game.Color;
 import java.util.Random; 
 import java.util.ArrayList;
 
+/**
+ * @author  Emma Campbell & Emma Schechter
+ * @since   02-09-2021
+ */
 public class Computer extends Player {
     
     private Random rand = new Random(); 
@@ -18,14 +22,7 @@ public class Computer extends Player {
 
     @Override
     public boolean isUserPlayer() {
-        // TODO Auto-generated method stub
         return false;
-    }
-
-    @Override
-    public String playerName() {
-        // TODO Auto-generated method stub
-        return "Computer";
     }
 
     @Override

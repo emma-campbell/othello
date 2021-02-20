@@ -11,6 +11,11 @@ public class Minimax<State, Action, Player> implements SearchAlgorithm<State, Ac
     private Problem<State, Action, Player> prob;
     private int statesVisited;
 
+    /**
+     * Create a new instance of the MINIMAX solver
+     * 
+     * @param problem       generic instance of {@code Problem}
+     */
     public Minimax(Problem<State, Action, Player> problem){
         this.prob = problem;
     }

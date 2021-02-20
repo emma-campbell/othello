@@ -10,8 +10,8 @@ import othello.tui.Utils;
 import othello.ai.search.Problem;
 
 /**
- * @author Emma Campbell & Emma Schechter
- * @since 02-14-2021
+ * @author  Emma Campbell & Emma Schechter
+ * @since   02-09-2021
  */
 public class Othello implements Problem<Board, Point, Color> {
 
@@ -139,11 +139,8 @@ public class Othello implements Problem<Board, Point, Color> {
                         // This is just so the user has time to read and understand
                         // that there are no moves for them.
 
-                        try {
-                            Thread.sleep(3);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.wait(3);
+
                     }
                 } else {
                     // Check to see that p2 has moves left on the board
@@ -184,11 +181,7 @@ public class Othello implements Problem<Board, Point, Color> {
                         // This is just so the user has time to read and understand
                         // that there are no moves for them.
 
-                        try {
-                            Thread.sleep(2);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.wait(3);
                     }
                 }
             }

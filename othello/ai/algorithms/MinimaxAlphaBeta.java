@@ -2,17 +2,32 @@ package othello.ai.algorithms;
 
 import othello.ai.search.Problem;
 
+/**
+ * @author Emma Campbell & Emma Schechter
+ * @since 02-17-2021
+ */
 public class MinimaxAlphaBeta<State, Action, Player> implements SearchAlgorithm<State, Action> {
 
     private Problem<State, Action, Player> prob;
     private int depthLimit;
     private int statesVisited;
 
+    /**
+     * Return a new instance of the H-MINIMAX with ALPHA-BETA cutoff
+     * 
+     * @param problem       generic instance of {@code Problem}
+     * @param lim           depth limit
+     */
     public MinimaxAlphaBeta(Problem<State, Action, Player> problem, int lim) {
         this.prob = problem;
         this.depthLimit = lim;
     }
 
+    /**
+     * Solve for the next best state
+     * 
+     * @param s         current {@code State}
+     */
     @Override
     public Action solve(State s) {
         
@@ -34,6 +49,14 @@ public class MinimaxAlphaBeta<State, Action, Player> implements SearchAlgorithm<
         return action;
     }
 
+    /**
+     * Return the minimum minimax value 
+     * 
+     * @param s             current {@code State}
+     * @param p             current player
+     * @param depth         current depth
+     * @return              minimum minimax value
+     */
     private int minValue(State s, Player p, int depth, int alpha, int beta) {
         
         statesVisited++;
@@ -62,6 +85,14 @@ public class MinimaxAlphaBeta<State, Action, Player> implements SearchAlgorithm<
         return min;
     }
     
+    /**
+     * Return the maximum minimax value
+     * 
+     * @param s             current {@code State}
+     * @param p             current player
+     * @param depth         current depth
+     * @return              maximum minimax value
+     */
     private int maxValue(State s, Player p, int depth, int alpha, int beta) {
         
         statesVisited++;
@@ -90,6 +121,12 @@ public class MinimaxAlphaBeta<State, Action, Player> implements SearchAlgorithm<
         return max;
     } 
 
+    /**
+     * Have we reached the depth limit?
+     * 
+     * @param depth     current depth
+     * @return          {@code true} if depth >= depthLimit, {@code false} otherwise.
+     */
     private boolean cutoff(int depth) {
         return depth >= depthLimit;
     }

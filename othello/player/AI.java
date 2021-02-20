@@ -9,6 +9,10 @@ import othello.ai.search.Problem;
 import othello.game.Board;
 import othello.game.Color;
 
+/**
+ * @author  Emma Campbell & Emma Schechter
+ * @since   02-14-2021
+ */
 public class AI extends Player {
     
     private int algo;
@@ -23,11 +27,6 @@ public class AI extends Player {
     @Override
     public boolean isUserPlayer() {
         return false;
-    }
-
-    @Override
-    public String playerName() {
-        return "AI";
     }
 
     @Override
