@@ -1,6 +1,6 @@
 # Othello
 <p align="center">
-    <img width="60%" src="https://github.com/emma-campbell/searching/blob/master/img/demo.svg">
+    <img width="75%" src="https://github.com/emma-campbell/searching/blob/master/img/demo.svg">
 </p>
 
 # Authors
@@ -17,6 +17,7 @@ The main package directory `othello` should be one of four items that you see wh
 othello
 ├── ai
 │   ├── algorithms
+│   │   ├── HMinimax.java
 │   │   ├── Minimax.java
 │   │   ├── MinimaxAlphaBeta.java
 │   │   └── SearchAlgorithm.java
@@ -32,10 +33,12 @@ othello
 │       └── IllegalMove.java
 ├── player
 │   ├── AI.java
+│   ├── Computer.java
 │   ├── Human.java
 │   └── Player.java
 └── tui
     └── Utils.java
+
 ```
 
 Outside of the main package, there is a singular file `Run.java`, your entry point into the program.
@@ -59,5 +62,5 @@ java Run
 - [X] H-MINIMAX w/ alpha-beta pruning
 - [X] Code Commenting
 - [ ] Update Tree in README
-- [ ] Code Refactor -- Othello.java
+- [X] Code Refactor -- Othello.java
 - [ ] Timer Functionality -- AI. 

@@ -14,9 +14,10 @@ import othello.ai.search.Problem;
  * @since   02-09-2021
  */
 public class Othello implements Problem<Board, Point, Color> {
-
+    
+    private Scanner input = new Scanner(System.in);
     private Board board;
-
+    
     private Player p1;
     private Player p2;
 
@@ -76,13 +77,9 @@ public class Othello implements Problem<Board, Point, Color> {
      * users move, and calls the methods that generate the AI's move. When game play
      * is finished, it calls {@code decideWinner()} to determine who won the game
      * 
-     * TODO: - Decrease code complexity by moving redundant code to its own function
-     * 
      * @return      {@code Player} who won
      */
     public Player play() {
-
-        Scanner input = new Scanner(System.in);
 
         String p1Color = ((p1.color == Color.DARK) ? "DARK" : "LIGHT"); // Store P1's color
         String p2Color = ((p2.color == Color.DARK) ? "DARK" : "LIGHT"); // Store P2's color
@@ -105,22 +102,7 @@ public class Othello implements Problem<Board, Point, Color> {
                         // If they are a user
                         if (p1.isUserPlayer()) {
 
-                            Point move;
-
-                            do {
-                                System.out.print("\n" + p1Color + ", PLEASE CHOSE A SPACE [rowcol (i.e. a3)]: ");
-                                String space = input.next();
-
-                                move = stringToPoint(space);
-
-                                if (board.validMove(p1.color, move.x, move.y)) {
-                                    break;
-                                }
-
-                            } while (!board.validMove(p1.color, move.x, move.y));
-
-                            // Add our new point for the p1
-                            board.refreshBoard(move, p1.color);
+                            takeTurn(p1);
 
                         } else { // Otherwise, they are AI! (or Random)
                             Point move;
@@ -148,22 +130,7 @@ public class Othello implements Problem<Board, Point, Color> {
                         // Check to see if they are a user player
                         if (p2.isUserPlayer()) {
 
-                            Point move;
-
-                            do {
-                                System.out.print("\n" + p2Color + ", PLEASE CHOSE A SPACE [rowcol (i.e. a3)]: ");
-                                String space = input.next();
-
-                                move = stringToPoint(space);
-
-                                if (board.validMove(p2.color, move.x, move.y)) {
-                                    break;
-                                }
-
-                            } while (!board.validMove(p2.color, move.x, move.y));
-
-                            // Add our new point for the p1
-                            board.refreshBoard(move, p2.color);
+                            takeTurn(p2);
 
                         } else { // The player is AI! (or Random)
                             Point move = p2.play(this);
@@ -189,6 +156,33 @@ public class Othello implements Problem<Board, Point, Color> {
 
         input.close();
         return decideWinner();
+    }
+
+    /**
+     * Have the USER take their turn
+     * 
+     * @param p     user {@code Player}
+     */
+    private void takeTurn(Player p) {
+        
+        Point move;
+
+        String colorStr = (p.color == Color.DARK ? "DARK" : "LIGHT");
+
+        do {
+            System.out.print("\n" + colorStr + ", PLEASE CHOSE A SPACE [rowcol (i.e. a3)]: ");
+            String space = input.next();
+
+            move = stringToPoint(space);
+
+            if (board.validMove(p.color, move.x, move.y)) {
+                break;
+            }
+
+        } while (!board.validMove(p.color, move.x, move.y));
+
+        // Add our new point for p
+        board.refreshBoard(move, p.color);
     }
 
     /**
