@@ -61,6 +61,6 @@ java Run
 - [X] H-MINIMAX
 - [X] H-MINIMAX w/ alpha-beta pruning
 - [X] Code Commenting
-- [ ] Update Tree in README
+- [X] Update Tree in README
 - [X] Code Refactor -- Othello.java
 - [ ] Timer Functionality -- AI. 
