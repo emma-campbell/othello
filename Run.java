@@ -98,7 +98,8 @@ public class Run {
         while (true) {
             System.out.println("Please select a limit to the depth-first search.");
             System.out.println("Keep in mind, that the larger the number, the longer the search will take.");
-            System.out.print("Depth Limit: ");
+            System.out.println("I recommend chosing a limit between 1 and 9.");
+            System.out.print("DEPTH LIMIT: ");
 
             if (input.hasNextInt()) {
                 return input.nextInt();
