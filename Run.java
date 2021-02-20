@@ -28,8 +28,6 @@ public class Run {
         
         if (opp == 1) {
             p2 = new Computer(Color.LIGHT);
-        } else if (opp == 3) {
-            System.out.println("UNHANDLED");
         } else {
             if (opp != 2) {
                 int limit = chooseDepthLimit();

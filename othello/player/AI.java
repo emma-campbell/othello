@@ -2,6 +2,7 @@ package othello.player;
 
 import java.awt.Point;
 
+import othello.ai.algorithms.HMinimax;
 import othello.ai.algorithms.Minimax;
 import othello.ai.algorithms.MinimaxAlphaBeta;
 import othello.ai.search.Problem;
@@ -38,7 +39,8 @@ public class AI extends Player {
         } 
 
         if (algo == 3) {
-            // TODO: H-Minimax
+            HMinimax<Board, Point, Color> solver = new HMinimax<>(problem, depthLimit);
+            return solver.solve(problem.initialState());
         }
 
         if (algo == 4) {
