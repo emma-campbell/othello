@@ -105,9 +105,9 @@ public class Othello implements Problem<Board, Point, Color> {
                             takeTurn(p1);
 
                         } else { // Otherwise, they are AI! (or Random)
-                            Point move;
-                            move = p1.play(this);
+                            Point move = p1.play(this);
                             board.refreshBoard(move, p1.color);
+                            Utils.wait(3000);
                         }
                     } else {
 
@@ -135,6 +135,7 @@ public class Othello implements Problem<Board, Point, Color> {
                         } else { // The player is AI! (or Random)
                             Point move = p2.play(this);
                             board.refreshBoard(move, p2.color);
+                            Utils.wait(3000);
                         }
                     } else {
 

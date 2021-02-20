@@ -55,12 +55,3 @@ and to run
 ```
 java Run
 ```
-
-# Todos
-- [x] Random  
-- [X] H-MINIMAX
-- [X] H-MINIMAX w/ alpha-beta pruning
-- [X] Code Commenting
-- [X] Update Tree in README
-- [X] Code Refactor -- Othello.java
-- [ ] Timer Functionality -- AI. 

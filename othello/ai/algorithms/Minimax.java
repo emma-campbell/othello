@@ -29,18 +29,28 @@ public class Minimax<State, Action, Player> implements SearchAlgorithm<State, Ac
      */
     @Override
     public Action solve(State s) {
-        statesVisited = 0;
-        int max = Integer.MIN_VALUE;
-        Action action = null;
-        Player p = this.prob.whoseTurn(s);
+        
+        statesVisited = 0;                              // Reset States Visited to 0
 
-        for (Action a : this.prob.actions(s)) {
-            int minimaxValue = minValue(this.prob.result(s, a), p);
+        long startTime = System.currentTimeMillis();    // Store the start time for the timer
+
+        int max = Integer.MIN_VALUE;                    // MIN_VALUE to represent -inf
+        Action action = null;                           // Store the action that we like best
+        Player p = prob.whoseTurn(s);                   // Whose turn is it in this state?
+
+        for (Action a : prob.actions(s)) {
+            int minimaxValue = minValue(prob.result(s, a), p);
             if (minimaxValue > max) {
                 max = minimaxValue;
                 action = a;
             }
         }
+
+        long finishTime = System.currentTimeMillis();    // Store the end time for the timer
+        float time = (finishTime - startTime) / 1000F;   // Calculate the Elapsed time
+
+        System.out.println("Visited " + statesVisited + " states.");
+        System.out.println("Elasped Time: " + time + " s.");
 
         return action;
     }

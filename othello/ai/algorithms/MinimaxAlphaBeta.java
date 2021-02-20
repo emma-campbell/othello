@@ -31,20 +31,28 @@ public class MinimaxAlphaBeta<State, Action, Player> implements SearchAlgorithm<
     @Override
     public Action solve(State s) {
         
-        statesVisited = 0;
+        statesVisited = 0;                              // Reset States Visited to 0
 
-        int max = Integer.MIN_VALUE;
-        Action action = null;
-        Player p = prob.whoseTurn(s);
-        int depth = 1;
+        long startTime = System.currentTimeMillis();    // Store the start time for the timer
 
-        for (Action a : prob.actions(s)) {         
+        int max = Integer.MIN_VALUE;                    // MIN_VALUE to represent -inf
+        Action action = null;                           // Store the action that we like best
+        Player p = prob.whoseTurn(s);                   // Whose turn is it in this state?
+        int depth = 1;                                  // Depth Level to start at
+
+        for (Action a : prob.actions(s)) {
             int minimaxValue = minValue(prob.result(s, a), p, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
             if (minimaxValue > max) {
                 max = minimaxValue;
                 action = a;
             }
         }
+
+        long finishTime = System.currentTimeMillis();    // Store the end time for the timer
+        float time = (finishTime - startTime) / 1000F;   // Calculate the Elapsed time
+
+        System.out.println("Visited " + statesVisited + " states.");
+        System.out.println("Elasped Time: " + time + " s.");
 
         return action;
     }
